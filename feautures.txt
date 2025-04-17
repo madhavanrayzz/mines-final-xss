@@ -1,0 +1,15 @@
+
+✅ Features Recap
+Resumes based on last processed URL, not index.
+
+Starts from 30 URLs earlier (fallback).
+
+Logs URLs with alert popups in alert_xss_found.txt.
+
+Logs screenshots (but no folder creation) in alert_screenshots_log.txt.
+
+Logs failed tabs (timeout/load errors) in failed_tabs.txt.
+
+Retries failed tabs automatically at the end.
+
+Waits for full page load, and checks every tab patiently.
