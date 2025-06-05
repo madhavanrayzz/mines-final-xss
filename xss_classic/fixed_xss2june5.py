@@ -25,28 +25,40 @@ def extract_folder_name(url):
     host = parsed.hostname or "unknown"
     parts = host.split(".")
     if len(parts) > 2:
-        return parts[-3]  # sub.example.com → sub
+        return parts[-3]          # sub.example.com → sub
     elif len(parts) == 2:
-        return parts[0]   # example.com → example
+        return parts[0]           # example.com → example
     else:
         return host
 
-target_folder = extract_folder_name(first_url)
-os.makedirs(target_folder, exist_ok=True)
+def get_unique_folder_name(base_name):
+    """
+    If 'base_name' exists, append 1, 2, 3… until a free name is found.
+    """
+    folder_name = base_name
+    counter = 1
+    while os.path.exists(folder_name):
+        folder_name = f"{base_name}{counter}"
+        counter += 1
+    return folder_name
+
+base_folder_name = extract_folder_name(first_url)
+target_folder = get_unique_folder_name(base_folder_name)
+os.makedirs(target_folder)        # ← now guaranteed unique
 
 # === Paths ===
-divided_folder = os.path.join(target_folder, "divided_urls")
+divided_folder  = os.path.join(target_folder, "divided_urls")
 executed_folder = os.path.join(target_folder, "executed_urls")
 detected_folder = os.path.join(target_folder, "detected_xss")
-error_log_file = os.path.join(target_folder, "errors.log")
+error_log_file  = os.path.join(target_folder, "errors.log")
 
-os.makedirs(divided_folder, exist_ok=True)
+os.makedirs(divided_folder,  exist_ok=True)
 os.makedirs(executed_folder, exist_ok=True)
 os.makedirs(detected_folder, exist_ok=True)
 
 executed_lock = threading.Lock()
 detected_lock = threading.Lock()
-log_lock = threading.Lock()
+log_lock      = threading.Lock()
 
 # === User-Agent Rotation ===
 user_agents = [
@@ -64,8 +76,7 @@ all_urls.sort()
 # === Divide URLs into files ===
 urls_per_instance = [[] for _ in range(chrome_instances)]
 for idx, url in enumerate(all_urls):
-    target = idx % chrome_instances
-    urls_per_instance[target].append(url)
+    urls_per_instance[idx % chrome_instances].append(url)
 
 for instance_id in range(chrome_instances):
     divided_file = os.path.join(divided_folder, f"urls_instance_{instance_id}.txt")
@@ -134,6 +145,7 @@ def test_url_with_retry(driver, url, tab_index, handles, instance_id):
 
             append_executed_url(url, instance_id)
             return True
+
         except (TimeoutException, WebDriverException):
             print(f"⚠️ Attempt {attempt} failed for {url}")
             time.sleep(1)
@@ -205,7 +217,7 @@ def main():
         thread = threading.Thread(target=worker, args=(instance_id,))
         threads.append(thread)
         thread.start()
-        time.sleep(0.3)
+        time.sleep(0.3)  # stagger startups just a bit
 
     for thread in threads:
         thread.join()
